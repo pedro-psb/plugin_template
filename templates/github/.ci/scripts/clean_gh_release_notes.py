@@ -8,8 +8,9 @@ import sys
 
 RE_VERSION = re.compile(r"^## (\d+\.\d+\.\d+)")
 
+
 def main():
-    # Print disclaimer:
+    plugin_name = sys.argv[1]
     version_str = ""
     for line in sys.stdin:
         if line.endswith("\n"):
@@ -19,9 +20,10 @@ def main():
             match = RE_VERSION.match(line)
             if match and version_str == "":
                 version_str = match.group(1)
+                docs_url = f"https://pulpproject.org/{plugin_name}/changes/#{version_str}"
                 print("")
                 print("> [!NOTE]")
-                print(f"> Changes are also available on [Pulp docs](https://pulpproject.org/pulpcore/changes/#{version_str})")
+                print(f"> Changes are also available on [Pulp docs]({docs_url})")
         else:
             print(line)
 
